@@ -480,7 +480,7 @@ local function APL ()
         if AR.Cast(S.SymbolsofDeath, Settings.Subtlety.OffGCDasOffGCD.SymbolsofDeath) then return "Cast Symbols of Death (OOC)"; end
       end
       -- Opener
-      if Everyone.TargetIsValid() and Target:IsInRange(5) then
+      if Everyone.TargetIsValid() and Target:IsInRange(15) then
         if Player:ComboPoints() >= 5 then
           if S.Nightblade:IsCastable() and not Target:Debuff(S.Nightblade)
             and Rogue.CanDoTUnit(Target, S.Eviscerate:Damage()*Settings.Subtlety.EviscerateDMGOffset) then

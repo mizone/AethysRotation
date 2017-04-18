@@ -576,7 +576,7 @@ local function APL ()
         if AR.Cast(S.ShurikenToss) then return "Cast Shuriken Toss"; end
       end
       -- Trick to take in consideration the Recovery Setting
-      if S.Shadowstrike:IsCastable() and Target:IsInRange(5) then
+      if S.Shadowstrike:IsCastable() and Target:IsInRange(15) then
         if AR.Cast(S.PoolEnergy) then return "Normal Pooling"; end
       end
     end

@@ -417,7 +417,7 @@ local function Stealthed ()
     return Finish();
   end
   -- actions.stealthed+=/shadowstrike
-  if S.Shadowstrike:IsCastable() and Target:IsInRange(5) then
+  if S.Shadowstrike:IsCastable() and Target:IsInRange(15) then
     if AR.Cast(S.Shadowstrike) then return ""; end
   end
   return false;

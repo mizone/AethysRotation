@@ -11,6 +11,7 @@
   AR.GUISettings.APL.Warrior = {
     Commons = {
       -- SoloMode Settings
+      VictoryRushHP = 80,
       -- {Display GCD as OffGCD, ForceReturn}
       GCDasOffGCD = {
         -- Abilities
@@ -22,7 +23,12 @@
         Berserking = {true, false},
         BloodFury = {true, false},
         -- Abilities
-        Pummel = {true, false}
+        Pummel = {true, false},
+		Intercept = {true, false},
+		BattleCry = {true, false},
+		Avatar = {true, false},
+		Charge = {true, false},
+		VictoryRush = {true, false}
       }
     },
     Arms = {
@@ -31,6 +37,7 @@
       },
       -- {Display OffGCD as OffGCD, ForceReturn}
       OffGCDasOffGCD = {
+	  FocusedRage = {true, false}
       }
     },
     Fury = {
@@ -40,8 +47,17 @@
       -- {Display OffGCD as OffGCD, ForceReturn}
       OffGCDasOffGCD = {
         -- Abilities
-        Avatar = {true, false},
-        BattleCry = {true, false}
+
       }
-    }
+    },
+    Protection = {
+      -- {Display GCD as OffGCD, ForceReturn}
+      GCDasOffGCD = {
+      },
+      -- {Display OffGCD as OffGCD, ForceReturn}
+      OffGCDasOffGCD = {
+        -- Abilities
+		Shieldblock = {true, false}
+      }
+    }	
   };

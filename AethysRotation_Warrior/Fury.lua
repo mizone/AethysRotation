@@ -59,6 +59,7 @@ local AR = AethysRotation;
     OdynsFury                     = Spell(205545),
     -- Defensive
     -- Utility
+	Pummel                        = Spell(6552),
     -- Legendaries
     FujiedasFury                  = Spell(207775),
     StoneHeart                    = Spell(225947),
@@ -302,6 +303,9 @@ local function APL ()
       AC.GetEnemies(8);
       AC.GetEnemies(14);
       Everyone.AoEToggleEnemiesUpdate();
+	  if not Target:IsInRange(8) and Target:IsInRange(25) and S.Charge:IsCastable() then
+          if AR.Cast(S.Charge) then return ""; end
+        end
   --- Out of Combat
     if not Player:AffectingCombat() then
       -- Flask
@@ -311,9 +315,7 @@ local function APL ()
 
       -- Opener
       if Everyone.TargetIsValid() then
-        if not Target:IsInRange(8) and Target:IsInRange(25) and S.Charge:IsCastable() then
-          if AR.Cast(S.Charge) then return ""; end
-        end
+        
         if Target:IsInRange(5) then
           if S.Bloodthrist:IsCastable() then
             if AR.Cast(S.Bloodthrist) then return ""; end
@@ -324,6 +326,9 @@ local function APL ()
     end
   --- In Combat
   if Everyone.TargetIsValid() then
+     if Settings.General.InterruptEnabled and Target:IsInRange(5) and S.Pummel:IsCastable() and Target:IsInterruptible() then
+         if AR.Cast(S.Pummel, Settings.Commons.OffGCDasOffGCD.Pummel) then return "Cast Kick"; end
+	 end 
     -- actions+=/potion,name=old_war,if=(target.health.pct<20&buff.battle_cry.up)|target.time_to_die<30
     -- actions+=/use_item,name=ring_of_collapsing_futures,if=equipped.ring_of_collapsing_futures&buff.battle_cry.up&buff.enrage.up&!buff.temptation.up
     -- actions+=/dragon_roar,if=(equipped.convergence_of_fates&cooldown.battle_cry.remains<2)|!equipped.convergence_of_fates&(!cooldown.battle_cry.remains<=10|cooldown.battle_cry.remains<2)
@@ -333,16 +338,16 @@ local function APL ()
     -- actions+=/battle_cry,if=gcd.remains=0&!talent.dragon_roar.enabled&(!equipped.convergence_of_fates|!talent.bloodbath.enabled|!cooldown.bloodbath.remains|cooldown.bloodbath.remains>=10)
     -- NOTE: Delete gcd.remains=0 for display BattleCry at offgcd.
     if AR.CDsON() and S.BattleCry:IsCastable() and not S.DragonRoar:IsAvailable() and ((not I.ConvergenceofFates:IsEquipped(13) or I.ConvergenceofFates:IsEquipped(14)) and not S.Bloodbath:IsAvailable() or S.Bloodthrist:Cooldown() or S.Bloodthrist:Cooldown() >= 10) then
-      if AR.Cast(S.BattleCry, Settings.Fury.OffGCDasOffGCD.BattleCry) then return ""; end
+      if AR.Cast(S.BattleCry, Settings.Commons.OffGCDasOffGCD.BattleCry) then return ""; end
     end
     -- actions+=/battle_cry,if=gcd.remains=0&buff.dragon_roar.up&(cooldown.bloodthirst.remains=0|buff.enrage.remains>cooldown.bloodthirst.remains)
     -- NOTE: Delete gcd.remains=0 for display BattleCry at offgcd.
     if AR.CDsON() and S.BattleCry:IsCastable() and Player:Buff(S.DragonRoar) and (S.Bloodthrist:Cooldown() == 0 or Player:BuffRemains(S.Enrage) > S.Bloodthrist:Cooldown()) then
-      if AR.Cast(S.BattleCry, Settings.Fury.OffGCDasOffGCD.BattleCry) then return ""; end
+      if AR.Cast(S.BattleCry, Settings.Commons.OffGCDasOffGCD.BattleCry) then return ""; end
     end
     -- actions+=/avatar,if=buff.battle_cry.up|(target.time_to_die<(cooldown.battle_cry.remains+10))
     if AR.CDsON() and S.Avatar:IsCastable() and (Player:Buff(S.BattleCry) or (Target:TimeToDie() < S.BattleCry:Cooldown() + 10)) then
-      if AR.Cast(S.Avatar, Settings.Fury.OffGCDasOffGCD.Avatar) then return ""; end
+      if AR.Cast(S.Avatar, Settings.Commons.OffGCDasOffGCD.Avatar) then return ""; end
     end
     -- actions+=/bloodbath,if=buff.dragon_roar.up|!talent.dragon_roar.enabled&buff.battle_cry.up
     if AR.CDsON() and S.Bloodbath:IsCastable() and (Player:Buff(S.DragonRoar) or (not S.DragonRoar:IsAvailable() and Player:Buff(S.BattleCry))) then

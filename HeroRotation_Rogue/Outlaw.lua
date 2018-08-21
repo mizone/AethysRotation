@@ -285,7 +285,7 @@ local function CDs ()
       if not Player:IsStealthed(true, true) then
         -- # Using Vanish/Ambush is only a very tiny increase, so in reality, you're absolutely fine to use it as a utility spell.
         -- actions.cds+=/vanish,if=!stealthed.all&variable.ambush_condition
-        if S.Vanish:IsCastable() and Ambush_Condition() then
+        if S.Vanish:IsCastable() and Ambush_Condition() and not player:IsTanking（target）then
           if HR.Cast(S.Vanish, Settings.Commons.OffGCDasOffGCD.Vanish) then return "Cast Vanish"; end
         end
         -- actions.cds+=/shadowmeld,if=!stealthed.all&variable.ambush_condition
